@@ -3,33 +3,36 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>مبادرة الأستاذة غادة الحربي | إدارة الفصول والتحدي</title>
+    <title>مبادرة الأستاذة غادة الحربي | تحدي الفصحى</title>
     <style>
         :root { --primary: #1a2a6c; --gold: #d4af37; --bg: #f8f9fa; }
         body { font-family: 'Segoe UI', Tahoma, sans-serif; background: var(--bg); margin: 0; padding: 10px; }
-        .app-container { width: 100%; max-width: 900px; background: white; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); margin: auto; border: 2px solid var(--primary); }
+        .app-container { width: 100%; max-width: 900px; background: white; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); margin: auto; border: 2px solid var(--primary); overflow: hidden; }
         .header { background: var(--primary); color: white; padding: 20px; text-align: center; border-bottom: 4px solid var(--gold); }
         .screen { padding: 20px; display: none; text-align: center; }
         .active { display: block; }
         
         .setup-box { background: #fff; padding: 20px; border-radius: 15px; margin-bottom: 20px; border: 1px solid #ddd; }
-        textarea { width: 100%; height: 100px; border-radius: 10px; padding: 10px; border: 1px solid #ccc; margin: 10px 0; resize: none; }
-        select, input[type="text"] { padding: 10px; border-radius: 5px; border: 1px solid #ccc; margin: 5px; font-size: 1rem; }
+        textarea { width: 100%; height: 100px; border-radius: 10px; padding: 10px; border: 1px solid #ccc; margin: 10px 0; resize: none; font-family: inherit; }
+        input[type="text"], select { padding: 10px; border-radius: 5px; border: 1px solid #ccc; margin: 5px; font-size: 1rem; width: 80%; }
 
         .groups-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 15px; margin: 20px 0; }
         .group-card { background: #fefefe; padding: 15px; border-radius: 10px; border: 1px solid #eee; border-top: 4px solid var(--gold); }
         
-        .riddle-card { background: #fff; border-right: 10px solid var(--gold); padding: 30px; border-radius: 15px; font-size: 1.6rem; color: var(--primary); margin: 25px 0; box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
+        .riddle-card { background: #fff; border-right: 10px solid var(--gold); padding: 30px; border-radius: 15px; font-size: 1.5rem; color: var(--primary); margin: 25px 0; box-shadow: 0 5px 15px rgba(0,0,0,0.05); line-height: 1.6; }
         
-        .btn { padding: 12px 25px; border: none; border-radius: 30px; cursor: pointer; font-weight: bold; transition: 0.3s; margin: 5px; }
+        .btn { padding: 12px 25px; border: none; border-radius: 30px; cursor: pointer; font-weight: bold; transition: 0.3s; margin: 5px; font-size: 1rem; }
         .btn-gold { background: var(--gold); color: white; width: 100%; max-width: 250px; }
         .btn-blue { background: var(--primary); color: white; }
         .btn-correct { background: #27ae60; color: white; flex: 1; }
         .btn-wrong { background: #e74c3c; color: white; flex: 1; }
 
         .score-table { width: 100%; border-collapse: collapse; margin-top: 20px; }
-        .score-table th, .score-table td { border: 1px solid #ddd; padding: 10px; text-align: center; }
+        .score-table th, .score-table td { border: 1px solid #ddd; padding: 12px; text-align: center; }
         .score-table th { background: var(--primary); color: white; }
+        .top-rank { background-color: #fff9e6; font-weight: bold; color: var(--primary); }
+
+        .medal { font-size: 1.2rem; margin-left: 5px; }
     </style>
 </head>
 <body>
@@ -37,40 +40,34 @@
 <div class="app-container">
     <div class="header">
         <h2>مبادرة الأستاذة غادة الحربي</h2>
-        <div id="project-subtitle">نظام تحدي المترادفات والأضداد</div>
+        <div>🏆 لوحة شرف تحدي المترادفات والأضداد</div>
     </div>
 
     <div id="setup-screen" class="screen active">
         <div class="setup-box">
             <h3>إضافة فصل جديد</h3>
-            <input type="text" id="className" placeholder="اسم الفصل (مثلاً: أول/1)">
-            <textarea id="classNamesList" placeholder="الصق أسماء طلاب الفصل هنا (اسم في كل سطر)..."></textarea>
+            <input type="text" id="className" placeholder="اسم الفصل (مثلاً: سادس/أ)">
+            <textarea id="classNamesList" placeholder="أدخل أسماء الطلاب هنا (كل اسم في سطر)..."></textarea>
             <button class="btn btn-blue" onclick="addClass()">حفظ الفصل والأسماء</button>
         </div>
-
-        <div id="fount-classes" style="margin-top: 20px;">
-            <h3>الفصول المسجلة</h3>
-            <div id="classesList"></div>
-        </div>
-        
+        <div id="classesList"></div>
         <br>
-        <button id="startChallengeBtn" class="btn btn-gold" style="display:none;" onclick="showGameSetup()">انتقال لشاشة التحدي 🏁</button>
+        <button id="startChallengeBtn" class="btn btn-gold" style="display:none;" onclick="showGameSetup()">بدء التحدي 🏁</button>
     </div>
 
     <div id="game-setup-screen" class="screen">
-        <h3>اختر الفصل لبدء التحدي</h3>
+        <h3>اختر الفصل للمنافسة</h3>
         <select id="classSelector" onchange="previewGroups()"></select>
         <div class="groups-grid" id="groupsPreview"></div>
-        <button class="btn btn-gold" onclick="launchGame()">ابدأ اللعب الآن</button>
-        <button class="btn btn-blue" onclick="showScreen('setup-screen')">رجوع</button>
+        <button class="btn btn-gold" onclick="launchGame()">ابدأ اللعب</button>
+        <button class="btn btn-blue" onclick="showScreen('setup-screen')">رجوع للإعدادات</button>
     </div>
 
     <div id="game-screen" class="screen">
-        <div style="background:var(--primary); color:white; padding:10px; border-radius:10px; margin-bottom:15px;">
-            الفصل: <span id="activeClassName"></span> | 
-            <span id="activeGroupName" style="color:var(--gold)"></span>
+        <div style="background:var(--primary); color:white; padding:10px; border-radius:10px;">
+            الفصل: <span id="activeClassName"></span> | <span id="activeGroupName" style="color:var(--gold)"></span>
         </div>
-        <div style="font-size: 1.3rem;">دور الطالب: <b id="turnDisplay" style="color:var(--primary)">--</b></div>
+        <div style="font-size: 1.3rem; margin-top: 15px;">الطالب الحالي: <b id="turnDisplay" style="color:var(--primary)">--</b></div>
         
         <div class="riddle-card" id="riddleText">...</div>
         
@@ -78,19 +75,26 @@
         
         <div id="answerDetails" style="display:none;">
             <div style="font-size: 1.4rem; color: #27ae60; margin: 15px 0;">أنا: <b id="correctWord"></b></div>
-            <div id="synAntDisplay" style="margin-bottom: 25px; background:#f9f9f9; padding:10px; border-radius:10px;"></div>
+            <div id="synAntDisplay" style="margin-bottom: 25px; background:#f0f0f0; padding:10px; border-radius:10px;"></div>
             
             <div style="display:flex; gap:10px;">
-                <button class="btn btn-correct" onclick="recordScore(true)">إجابة صحيحة ✅</button>
-                <button class="btn btn-wrong" onclick="recordScore(false)">إجابة خاطئة ❌</button>
+                <button class="btn btn-correct" onclick="recordScore(true)">✅ إجابة صحيحة</button>
+                <button class="btn btn-wrong" onclick="recordScore(false)">❌ إجابة خاطئة</button>
             </div>
         </div>
     </div>
 
     <div id="result-screen" class="screen">
-        <h3 id="winningClassHeader">نتائج فصل --</h3>
+        <h3>🏆 قائمة المتصدرين (من الأعلى إلى الأسفل)</h3>
         <table class="score-table">
-            <thead><tr><th>المجموعة</th><th>الطالب</th><th>النقاط</th></tr></thead>
+            <thead>
+                <tr>
+                    <th>الترتيب</th>
+                    <th>المجموعة</th>
+                    <th>اسم الطالب</th>
+                    <th>النقاط</th>
+                </tr>
+            </thead>
             <tbody id="scoreBody"></tbody>
         </table>
         <br>
@@ -116,15 +120,12 @@
         { q: "أنا صوت الرعد القوي.. فمن أنا؟", a: "هزيم", s: "قصف / دوي", ant: "همس" },
         { q: "أنا الصمود في وجه المصاعب.. فمن أنا؟", a: "صبر", s: "تحمل / جلد", ant: "جزع" },
         { q: "أنا البحر الواسع جداً.. فمن أنا؟", a: "خضم", s: "يم / بحر", ant: "بر / يابس" }
-        // ... سيتم توليد الباقي برمجياً للتجربة
     ];
-    while(riddles.length < 100) riddles.push({...riddles[Math.floor(Math.random()*10)], q: "لغز إضافي لتعزيز المهارة #" + riddles.length});
 
     function addClass() {
         const name = document.getElementById('className').value.trim();
         const namesList = document.getElementById('classNamesList').value.split('\n').filter(n => n.trim() !== "");
-        
-        if(!name || namesList.length < 3) return alert("يرجى إدخال اسم الفصل و3 أسماء طلاب على الأقل");
+        if(!name || namesList.length < 3) return alert("يرجى إكمال البيانات");
         
         const students = namesList.map((s, i) => {
             let group = "المجموعة الأولى";
@@ -135,52 +136,39 @@
 
         allData[name] = students;
         localStorage.setItem('ghada_project', JSON.stringify(allData));
-        document.getElementById('className').value = "";
-        document.getElementById('classNamesList').value = "";
         renderClasses();
+        alert("تم حفظ الفصل بنجاح!");
     }
 
     function renderClasses() {
         const list = document.getElementById('classesList');
-        list.innerHTML = "";
-        const keys = Object.keys(allData);
-        keys.forEach(k => {
-            list.innerHTML += `<button class="btn btn-blue" onclick="deleteClass('${k}')">حذف ${k} 🗑️</button> `;
-        });
-        document.getElementById('startChallengeBtn').style.display = keys.length ? 'inline-block' : 'none';
+        list.innerHTML = Object.keys(allData).map(k => `<button class="btn btn-blue" onclick="deleteClass('${k}')">حذف ${k} 🗑️</button> `).join('');
+        document.getElementById('startChallengeBtn').style.display = Object.keys(allData).length ? 'inline-block' : 'none';
     }
 
     function deleteClass(name) {
-        if(confirm(`هل تريد حذف فصل ${name}؟`)) {
-            delete allData[name];
-            localStorage.setItem('ghada_project', JSON.stringify(allData));
-            renderClasses();
-        }
+        if(confirm(`حذف فصل ${name}؟`)) { delete allData[name]; localStorage.setItem('ghada_project', JSON.stringify(allData)); renderClasses(); }
     }
 
     function showGameSetup() {
         showScreen('game-setup-screen');
-        const selector = document.getElementById('classSelector');
-        selector.innerHTML = Object.keys(allData).map(k => `<option value="${k}">${k}</option>`).join('');
+        document.getElementById('classSelector').innerHTML = Object.keys(allData).map(k => `<option value="${k}">${k}</option>`).join('');
         previewGroups();
     }
 
     function previewGroups() {
         const className = document.getElementById('classSelector').value;
         const students = allData[className];
-        const container = document.getElementById('groupsPreview');
-        container.innerHTML = "";
-        ["المجموعة الأولى", "المجموعة الثانية", "المجموعة الثالثة"].forEach(g => {
+        document.getElementById('groupsPreview').innerHTML = ["المجموعة الأولى", "المجموعة الثانية", "المجموعة الثالثة"].map(g => {
             const list = students.filter(s => s.group === g).map(s => s.name).join('، ');
-            container.innerHTML += `<div class="group-card"><b>${g}</b><br><small>${list || 'لا يوجد'}</small></div>`;
-        });
+            return `<div class="group-card"><b>${g}</b><br><small>${list || 'فارغة'}</small></div>`;
+        }).join('');
     }
 
     function launchGame() {
         activeClass = document.getElementById('classSelector').value;
-        activeStudents = JSON.parse(JSON.stringify(allData[activeClass])); // نسخة للعب
-        currentRiddleIndex = 0;
-        currentPlayerIndex = 0;
+        activeStudents = JSON.parse(JSON.stringify(allData[activeClass]));
+        currentRiddleIndex = 0; currentPlayerIndex = 0;
         showScreen('game-screen');
         document.getElementById('activeClassName').innerText = activeClass;
         nextTurn();
@@ -199,7 +187,7 @@
     function revealAnswer() {
         const r = riddles[currentRiddleIndex];
         document.getElementById('correctWord').innerText = r.a;
-        document.getElementById('synAntDisplay').innerHTML = `<b>المترادف:</b> ${r.s} <br> <b>الضد:</b> ${r.ant}`;
+        document.getElementById('synAntDisplay').innerHTML = `<b>المترادف:</b> ${r.s} | <b>الضد:</b> ${r.ant}`;
         document.getElementById('answerDetails').style.display = 'block';
         document.getElementById('revealBtn').style.display = 'none';
     }
@@ -213,10 +201,23 @@
 
     function showResults() {
         showScreen('result-screen');
-        document.getElementById('winningClassHeader').innerText = `نتائج فصل: ${activeClass}`;
         const body = document.getElementById('scoreBody');
+        // هنا يتم الترتيب من الأعلى إلى الأسفل (Descending)
         activeStudents.sort((a,b) => b.score - a.score);
-        body.innerHTML = activeStudents.map(s => `<tr><td>${s.group}</td><td>${s.name}</td><td>${s.score}</td></tr>`).join('');
+        
+        body.innerHTML = activeStudents.map((s, index) => {
+            let medal = "";
+            if(index === 0) medal = "<span class='medal'>🥇</span>";
+            else if(index === 1) medal = "<span class='medal'>🥈</span>";
+            else if(index === 2) medal = "<span class='medal'>🥉</span>";
+            
+            return `<tr class="${index < 3 ? 'top-rank' : ''}">
+                <td>${index + 1}</td>
+                <td>${s.group}</td>
+                <td>${medal}${s.name}</td>
+                <td>${s.score}</td>
+            </tr>`;
+        }).join('');
     }
 
     function showScreen(id) {

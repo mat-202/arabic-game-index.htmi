@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <title>أبطال اللغة العربية - مبادرة الأستاذة غادة الرحيلي</title>
     <style>
-        /* تم استنساخ التنسيق بالكامل من ملف أبطال العمليات الحسابية */
+        /* التصميم المطابق لملفك الأصلي لضمان الإخراج الرائع */
         body { font-family: 'Arial', sans-serif; text-align: center; margin-top: 30px; background-color: #f9f9ff; }
         .main-content { display: flex; justify-content: center; max-width: 1000px; margin: auto; }
         .container { width: 100%; padding: 20px; border: 5px solid #4dabf7; border-radius: 15px; background-color: #fff; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); }
@@ -12,15 +12,14 @@
         .names-input-section { margin-bottom: 20px; padding: 15px; border: 1px dashed #ccc; border-radius: 8px; display: flex; justify-content: space-between; gap: 10px; }
         .folder { width: 33%; text-align: right; }
         .folder label { font-weight: bold; color: #e63946; display: inline-block; }
-        .folder textarea { width: 100%; resize: vertical; margin-bottom: 5px; box-sizing: border-box; height: 80px; }
+        .folder textarea { width: 100%; resize: vertical; margin-bottom: 5px; box-sizing: border-box; height: 80px; border: 1px solid #ddd; }
         .round-setup { margin-bottom: 20px; padding: 15px; background-color: #f1f3f5; border-radius: 8px; display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 15px; }
         .header-section { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; border-bottom: 2px solid #eee; padding-bottom: 10px; gap: 15px; }
         #timer-display { font-size: 2em; font-weight: bold; color: #333; padding: 5px 15px; border: 3px dashed #ffd43b; border-radius: 8px; min-width: 120px; text-align: center; }
         #question { font-size: 3em; margin: 30px auto; color: #333; min-height: 150px; width: 450px; text-align: center; }
         #q-type-text { font-size: 0.6em; color: #e63946; display: block; margin-bottom: 10px; font-weight: bold; }
         #answer-options-container { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin: 20px auto; max-width: 700px; }
-        .answer-btn { background-color: #4dabf7; color: white; padding: 20px 15px; font-size: 1.8em; border: none; cursor: pointer; border-radius: 10px; transition: background-color 0.3s, transform 0.1s; box-shadow: 0 4px #339af0; min-height: 80px; font-weight: bold; }
-        .answer-btn:hover:not(:disabled) { background-color: #339af0; transform: translateY(2px); box-shadow: 0 2px #1c7ed6; }
+        .answer-btn { background-color: #4dabf7; color: white; padding: 20px 15px; font-size: 1.8em; border: none; cursor: pointer; border-radius: 10px; transition: 0.2s; box-shadow: 0 4px #339af0; min-height: 80px; font-weight: bold; }
         .correct-answer { background-color: #40c057 !important; box-shadow: 0 4px #2f9e44 !important; }
         .wrong-answer { background-color: #e63946 !important; box-shadow: 0 4px #c92a2a !important; }
         .footer-text { margin-top: 40px; padding: 10px 0; font-size: 1.1em; color: #555; text-align: center; border-top: 1px solid #ccc; max-width: 1000px; margin-left: auto; margin-right: auto; }
@@ -36,34 +35,28 @@
         <div class="names-input-section" id="names-section">
             <div class="folder">
                 <label>المجموعة (أ):</label>
-                <textarea id="bulk-input-A" placeholder="الأسماء هنا..."></textarea>
-                <button onclick="saveNames('A')" style="width:100%; cursor:pointer;">تحديث القائمة</button>
+                <textarea id="bulk-input-A" placeholder="ضع الأسماء هنا..."></textarea>
+                <button onclick="updateData('A')" style="width:100%; cursor:pointer;">حفظ القائمة</button>
             </div>
             <div class="folder">
                 <label>المجموعة (ب):</label>
-                <textarea id="bulk-input-B" placeholder="الأسماء هنا..."></textarea>
-                <button onclick="saveNames('B')" style="width:100%; cursor:pointer;">تحديث القائمة</button>
+                <textarea id="bulk-input-B" placeholder="ضع الأسماء هنا..."></textarea>
+                <button onclick="updateData('B')" style="width:100%; cursor:pointer;">حفظ القائمة</button>
             </div>
             <div class="folder">
                 <label>المجموعة (ج):</label>
-                <textarea id="bulk-input-C" placeholder="الأسماء هنا..."></textarea>
-                <button onclick="saveNames('C')" style="width:100%; cursor:pointer;">تحديث القائمة</button>
+                <textarea id="bulk-input-C" placeholder="ضع الأسماء هنا..."></textarea>
+                <button onclick="updateData('C')" style="width:100%; cursor:pointer;">حفظ القائمة</button>
             </div>
         </div>
 
-        <div class="round-setup" id="round-setup">
-            <label for="folder-select">اختر المجموعة:</label>
+        <div class="round-setup">
+            <label>المجموعة:</label>
             <select id="folder-select"><option value="A">أ</option><option value="B">ب</option><option value="C">ج</option></select>
-            
-            <label for="mode-select">نوع التحدي:</label>
-            <select id="mode-select">
-                <option value="syn">مرادفات</option>
-                <option value="ant">أضداد</option>
-                <option value="mix">مختلط</option>
-            </select>
-            
-            <button id="start-btn" onclick="startGame()" style="background:#40c057; color:white; font-weight:bold;">بدء المسابقة</button> 
-            <button id="next-round-btn" onclick="startNewMatch()" style="display: none; background:#4dabf7; color:white;">جولة إقصاء جديدة</button>
+            <label>التحدي:</label>
+            <select id="mode-select"><option value="syn">مرادفات</option><option value="ant">أضداد</option><option value="mix">مختلط</option></select>
+            <button onclick="startTournament()" style="background:#40c057; color:white; font-weight:bold;">بدء المسابقة</button> 
+            <button id="next-match-btn" onclick="startNewMatch()" style="display: none; background:#4dabf7; color:white;">جولة إقصاء جديدة</button>
         </div>
 
         <div class="header-section">
@@ -72,7 +65,7 @@
         </div>
 
         <div id="question">
-            <span id="q-type-text">بانتظار البدء...</span>
+            <span id="q-type-text">---</span>
             <span id="q-main-word">---</span>
         </div> 
         
@@ -80,8 +73,8 @@
         <div id="feedback" style="font-size:1.5em; height:1.5em; font-weight:bold;"></div>
 
         <div class="score-boards">
-            <div id="score1-display">المتسابق 1: 0</div>
-            <div id="score2-display">المتسابق 2: 0</div>
+            <div id="score1">المتسابق 1: 0</div>
+            <div id="score2">المتسابق 2: 0</div>
         </div>
     </div>
 </div>
@@ -89,54 +82,52 @@
 <p class="footer-text">مبادرة من الأستاذة: غادة الرحيلي - المتوسطة الثانية والثلاثون بالمدينة المنورة</p>
 
 <script>
-    // بنك كلمات حقيقي 100% (تم استنساخه لضمان ظهور كلمات لغوية أصيلة)
-    const dictionary = [
+    // بنك كلمات حقيقي 100% (بدون توليد تلقائي وهمي)
+    const dictionaryBank = [
         {w:"تفاؤل", s:"استبشار", a:"تشاؤم"}, {w:"شجاع", s:"جسور", a:"جبان"}, {w:"كريم", s:"سخي", a:"بخيل"},
         {w:"واسع", s:"فسيح", a:"ضيق"}, {w:"ذكي", s:"فطين", a:"بليد"}, {w:"جميل", s:"وسيم", a:"قبيح"},
-        {w:"قوي", s:"شديد", a:"ضعيف"}, {w:"سهل", s:"يسير", a:"عسير"}, {w:"نور", s:"ضياء", a:"ظلام"},
-        {w:"علم", s:"معرفة", a:"جهل"}, {w:"فوز", s:"نصر", a:"هزيمة"}, {w:"بداية", s:"استهلال", a:"نهاية"},
-        {w:"نظيف", s:"طاهر", a:"متسخ"}, {w:"بناء", s:"تشييد", a:"هدم"}, {w:"عادل", s:"منصف", a:"ظالم"},
-        {w:"سريع", s:"عجول", a:"بطيء"}, {w:"فرح", s:"حبور", a:"ترح"}, {w:"ثابت", s:"راسخ", a:"متردد"},
-        {w:"ضخم", s:"عملاق", a:"قزم"}, {w:"يقين", s:"تأكد", a:"ريب"}, {w:"بشاشة", s:"طلاقة", a:"تجهم"},
-        {w:"غني", s:"ثري", a:"فقير"}, {w:"قديم", s:"عتيق", a:"جديد"}, {w:"هادئ", s:"وديع", a:"صاخب"},
-        {w:"عزة", s:"كرامة", a:"ذلة"}, {w:"باسل", s:"مغوار", a:"رعديد"}, {w:"إقدام", s:"جسارة", a:"إحجام"},
-        {w:"مودة", s:"محبة", a:"كراهية"}, {w:"أخفى", s:"كتم", a:"أعلن"}, {w:"ارتقاء", s:"صعود", a:"هبوط"}
+        {w:"نظيف", s:"طاهر", a:"متسخ"}, {w:"قوي", s:"شديد", a:"ضعيف"}, {w:"سهل", s:"يسير", a:"عسير"},
+        {w:"نور", s:"ضياء", a:"ظلام"}, {w:"علم", s:"معرفة", a:"جهل"}, {w:"فوز", s:"نصر", a:"هزيمة"},
+        {w:"بداية", s:"استهلال", a:"نهاية"}, {w:"فرح", s:"حبور", a:"ترح"}, {w:"عادل", s:"منصف", a:"ظالم"},
+        {w:"غني", s:"ثري", a:"فقير"}, {w:"قديم", s:"عتيق", a:"جديد"}, {w:"سريع", s:"عجول", a:"بطيء"},
+        {w:"ثابت", s:"راسخ", a:"متردد"}, {w:"باسل", s:"مغوار", a:"رعديد"}, {w:"إقدام", s:"جسارة", a:"إحجام"},
+        {w:"عزة", s:"كرامة", a:"ذلة"}, {w:"مودة", s:"محبة", a:"كراهية"}, {w:"أخفى", s:"كتم", a:"أعلن"},
+        {w:"ارتقاء", s:"صعود", a:"هبوط"}, {w:"يقين", s:"تأكد", a:"ريب"}, {w:"ضخم", s:"عملاق", a:"قزم"},
+        {w:"هادئ", s:"وديع", a:"صاخب"}, {w:"بارع", s:"ماهر", a:"خائب"}, {w:"قريب", s:"داني", a:"بعيد"}
     ];
-    // توليد 100 كلمة فريدة للتأكد من سلامة المنصة
-    for(let i=dictionary.length; i<100; i++) { dictionary.push({w:"مفردة_"+i, s:"مرادف_"+i, a:"ضد_"+i}); }
 
-    let activeBank = [], students = {A:[], B:[], C:[]}, inPlay = [];
+    let students = {A:[], B:[], C:[]}, inPlay = [], activeBank = [];
     let p1, p2, p1w, p2w, turn, qCount, timer, correctStr;
 
-    function saveNames(k) {
+    function updateData(k) {
         students[k] = document.getElementById('bulk-input-'+k).value.split('\n').filter(n => n.trim() !== "");
         alert("تم حفظ قائمة المجموعة " + k);
     }
 
-    function startGame() {
+    function startTournament() {
         const k = document.getElementById('folder-select').value;
-        if(students[k].length < 2) return alert("أدخل اسمين على الأقل في المجموعة!");
+        if(students[k].length < 2) return alert("أدخل اسمين على الأقل!");
         inPlay = [...students[k]];
-        activeBank = [...dictionary].sort(() => Math.random() - 0.5);
-        document.getElementById('next-round-btn').style.display = "inline-block";
+        activeBank = [...dictionaryBank].sort(() => Math.random() - 0.5);
+        document.getElementById('next-match-btn').style.display = "inline-block";
         document.getElementById('names-section').style.opacity = "0.5";
-        alert("جاهزون! تم تحميل بنك الكلمات بنجاح.");
+        alert("تم تحميل بنك الكلمات الحقيقية بنجاح.");
     }
 
     function startNewMatch() {
         if(inPlay.length < 2) return alert("انتهت البطولة!");
         let shuf = [...inPlay].sort(() => Math.random() - 0.5);
         p1 = shuf[0]; p2 = shuf[1]; p1w=0; p2w=0; qCount=0; turn=1;
-        document.getElementById('next-round-btn').style.display = "none";
-        document.getElementById('score1-display').innerText = p1 + ": 0";
-        document.getElementById('score2-display').innerText = p2 + ": 0";
-        generateQuestion();
+        document.getElementById('next-match-btn').style.display = "none";
+        document.getElementById('score1').innerText = p1 + ": 0";
+        document.getElementById('score2').innerText = p2 + ": 0";
+        nextQ();
     }
 
-    function generateQuestion() {
+    function nextQ() {
         clearInterval(timer);
         document.getElementById('feedback').innerText = "";
-        if(activeBank.length === 0) activeBank = [...dictionary].sort(() => Math.random() - 0.5);
+        if(activeBank.length === 0) activeBank = [...dictionaryBank].sort(() => Math.random() - 0.5);
         const obj = activeBank.pop();
         
         let mode = document.getElementById('mode-select').value;
@@ -149,51 +140,50 @@
 
         let opts = [correctStr];
         while(opts.length < 4) {
-            let r = dictionary[Math.floor(Math.random()*dictionary.length)];
+            let r = dictionaryBank[Math.floor(Math.random()*dictionaryBank.length)];
             let v = mode === 'syn' ? r.s : r.a;
             if(!opts.includes(v)) opts.push(v);
         }
         opts.sort(() => Math.random() - 0.5);
 
         const container = document.getElementById('answer-options-container');
-        container.innerHTML = opts.map(o => `<button class="answer-btn" onclick="handleChoice(this, '${o}')">${o}</button>`).join('');
+        container.innerHTML = opts.map(o => `<button class="answer-btn" onclick="check('${o}', this)">${o}</button>`).join('');
         startTimer();
     }
 
-    function handleChoice(btn, selected) {
+    function check(o, btn) {
         clearInterval(timer);
-        const allBtns = document.querySelectorAll('.answer-btn');
-        allBtns.forEach(b => b.disabled = true);
+        const btns = document.querySelectorAll('.answer-btn');
+        btns.forEach(b => b.disabled = true);
 
-        if(selected === correctStr) {
+        if(o === correctStr) {
             btn.classList.add('correct-answer');
             if(turn === 1) p1w++; else p2w++;
             document.getElementById('feedback').innerHTML = "<span style='color:green'>إجابة صحيحة ✅</span>";
         } else {
-            btn.classList.add('wrong-answer');
+            if(btn) btn.classList.add('wrong-answer');
             document.getElementById('feedback').innerHTML = `<span style='color:red'>خطأ! الإجابة: ${correctStr}</span>`;
         }
-
-        document.getElementById('score1-display').innerText = p1 + ": " + p1w;
-        document.getElementById('score2-display').innerText = p2 + ": " + p2w;
+        document.getElementById('score1').innerText = p1 + ": " + p1w;
+        document.getElementById('score2').innerText = p2 + ": " + p2w;
         qCount++;
-        setTimeout(() => { if(qCount < 2) { turn = 2; generateQuestion(); } else { finalizeMatch(); } }, 2000);
+        setTimeout(() => { if(qCount < 2) { turn = 2; nextQ(); } else { finalize(); } }, 2000);
     }
 
-    function finalizeMatch() {
+    function finalize() {
         let win, lose;
         if(p1w > p2w) { win = p1; lose = p2; }
         else if(p2w > p1w) { win = p2; lose = p1; }
-        else { qCount--; return generateQuestion(); }
-        alert("الفائز: " + win + " | هاردلك: " + lose);
+        else { qCount--; return nextQ(); }
+        alert("الفائز: " + win + " | يخرج: " + lose);
         inPlay = inPlay.filter(n => n !== lose);
-        document.getElementById('next-round-btn').style.display = "inline-block";
+        document.getElementById('next-match-btn').style.display = "inline-block";
         if(inPlay.length === 1) alert("🏆 البطل النهائي: " + win);
     }
 
     function startTimer() {
         let s = 15; document.getElementById('timer-display').innerText = s + " ثوانٍ";
-        timer = setInterval(() => { s--; document.getElementById('timer-display').innerText = s + " ثوانٍ"; if(s <= 0) { clearInterval(timer); handleChoice(null, ''); } }, 1000);
+        timer = setInterval(() => { s--; document.getElementById('timer-display').innerText = s + " ثوانٍ"; if(s <= 0) { clearInterval(timer); check('', null); } }, 1000);
     }
 </script>
 </body>
